@@ -1,27 +1,67 @@
 
-{% if messages %}
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-{% endif %}
+{% extends "RiVoiturage/layout.html"  %}
+
+{% block content  %}
+
+ <section class="ftco-quote">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-md-6 pr-md-5 aside-stretch py-5 choose">
+    				<div class="heading-section heading-section-white mb-5 ftco-animate">
+	            <h2 class="mb-2">Pour Créer une traget vous devez Connecter ou Créer un compte chauffeur </h2>
+	          </div>
+	          <div class="ftco-animate">
+	          	<p>Merci de vouloir choisir nos services de CoVoiturage .</p>
+	          	<ul class="un-styled my-5">
+	          		<li><span class="icon-check"></span>Securite</li>
+	          		<li><span class="icon-check"></span>Rapidite</li>
+	          		<li><span class="icon-check"></span>Efficacite</li>
+	          	</ul>
+	          </div>
+    			</div>
+                {% if messages %}
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                {% endif %}
 
 
-    {% if error %} 
-        Ce numéro de téléphone existe déjà ! 
-    {%endif%}
-        {% if form.errors %}
-            {{ form.errors  }}
-        {% endif %}
-              <!-- Form -->
-              <form action="{% url 'compte_chauffeur' %}" method="post">
-                  {%csrf_token%}
-                  {% for field in form.visible_fields %}
+                {% if error %} 
+                    Ce numéro de téléphone existe déjà ! 
+                {%endif%}
+                 {% if form.errors %}
+                        {{ form.errors  }}
+                {% endif %}
 
-                        <label class="">{{field.label_tag}}</label>
+            
+    			<div class="col-md-6 py-5 pl-md-5">
+    				<div class="heading-section mb-5 ftco-animate">
+	            <h2 class="mb-2">Inscription</h2>
+	          </div>
+         
+	          <form class="ftco-animate"  action="{% url 'compte_chauffeur' %}" method="post">
+              {% csrf_token %}
+	          	<div class="row">
+                 {% for field in form.visible_fields %}
+                    <div class="col-md-12">
+                      <div class="form-group">
                         {{ field }}
+                        <br />
+                      </div>
+                    </div>
                   {% endfor %}
-               
-                <button type="submit">Créer un compte</button>
-    
-              </form>
-              <!-- End Form -->
+	             
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="submit" value="Créer un compte" class="btn btn-primary py-3 px-5">
+                     <a href="{% url 'connexion' %}">vous avez deja un compte ?</a>
+                    </div>
+                  </div>
+              </div>
+            </form>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+
+{% endblock content %}

@@ -10,8 +10,8 @@ class NouveauCompte(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class':
-                '',
-                'placeholder': ''
+                'form-control',
+                'placeholder': 'Nom'
             }),
         required=True,
         initial='')
@@ -20,8 +20,8 @@ class NouveauCompte(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class':
-                '',
-                'placeholder': ''
+                'form-control',
+                'placeholder': 'Teléphone'
             }),
         required=True,
         initial='',
@@ -36,8 +36,8 @@ class NouveauCompte(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'class':
-                '',
-                'placeholder': ''
+                'form-control',
+                'placeholder': 'Mot de passe '
             }),
         required=True,
         validators=[
@@ -51,8 +51,8 @@ class NouveauCompte(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'class':
-                '',
-                'placeholder': ''
+                'form-control',
+                'placeholder': 'Confirmation Mot de passe'
             }),
         required=True,
         initial='',
@@ -79,8 +79,8 @@ class CompteChauffeur(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class':
-                '',
-                'placeholder': ''
+                'form-control',
+                'placeholder': 'Nom'
             }),
         required=True,
         initial='')
@@ -89,8 +89,8 @@ class CompteChauffeur(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class':
-                '',
-                'placeholder': ''
+                'form-control',
+                'placeholder': 'NNI'
             }),
         required=True,
         initial=''
@@ -100,8 +100,8 @@ class CompteChauffeur(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class':
-                '',
-                'placeholder': ''
+                'form-control',
+                'placeholder': 'Teléphone'
             }),
         required=True,
         initial='',
@@ -115,8 +115,8 @@ class CompteChauffeur(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class':
-                '',
-                'placeholder': ''
+                'form-control',
+                'placeholder': 'Permis'
             }),
         required=True,
         initial=''
@@ -126,8 +126,8 @@ class CompteChauffeur(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'class':
-                '',
-                'placeholder': ''
+                'form-control',
+                'placeholder': 'Mot de passe'
             }),
         required=True,
         validators=[
@@ -141,8 +141,8 @@ class CompteChauffeur(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'class':
-                '',
-                'placeholder': ''
+                'form-control',
+                'placeholder': 'Confirmation Mot de passe'
             }),
         required=True,
         initial='',
@@ -169,9 +169,9 @@ class ConnexionForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class':
-                'form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15',
+                'form-control',
                 'placeholder':
-                ''
+                'Téléphone'
             }),
         required=True,
         validators=[
@@ -184,9 +184,117 @@ class ConnexionForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'class':
-                'form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15 mb-3',
+                'form-control',
                 'placeholder':
-                ''
+                'Mot de passe'
             }),
         required=True
     )
+    
+
+class CreerTrajet(forms.Form):
+    point_depart=forms.CharField(
+        label="PointDepart",
+        widget=forms.TextInput(attrs={
+                'class':
+                'form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15',
+                'placeholder':
+                ''
+            }),
+        required=True,
+    )
+    point_darrive = forms.CharField(
+        label="PointDarrive",
+        widget=forms.TextInput(attrs={
+            'class':
+                'form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15',
+            'placeholder':
+                ''
+        }),
+        required=True,
+    )
+    chauffeur = forms.CharField(
+        label="Teléphone",
+        widget=forms.TextInput(
+            attrs={
+                'class':
+                    '',
+                'placeholder': ''
+            }),
+        required=True,
+        initial='',
+        validators=[
+            RegexValidator(
+                regex=r'^\d{8}(?:\d{2})?$',
+                message='Numero de téléphone incorrect')
+        ])
+
+
+class AjouterVoiture(forms.Form):
+
+    marque = forms.CharField(
+        label="marque",
+        widget=forms.TextInput(attrs={
+            'class':
+                'form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15',
+            'placeholder':
+                ''
+        }),
+        required=True,
+    )
+    matricule=forms.CharField(
+        label="matricule",
+        widget=forms.TextInput(attrs={
+            'class':
+                'form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15',
+            'placeholder':
+                ''
+        }),
+
+        required=True,
+    )
+    CARBURANT = (
+        ('ESSENCE', 'ESSENCE'),
+        ('GAZOILE', 'GAZOILE')
+    )
+
+    carburant = forms.ChoiceField(label="carburant",choices=CARBURANT)
+    #     widget=forms.TextInput(attrs={
+    #         'class':
+    #             'form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15',
+    #         'placeholder':
+    #             ''
+    #     }),
+    #
+    #     required=True,
+    # )
+    capacite=forms.CharField(
+        label="capacite",
+        widget=forms.TextInput(attrs={
+            'class':
+                'form-control',
+            'placeholder':
+                ''
+        }),
+
+        required=True,
+    )
+
+
+class Reserver(forms.Form):
+    client=forms.CharField(
+        label="Teléphone",
+        widget=forms.TextInput(
+            attrs={
+                'class':
+                    '',
+                'placeholder': ''
+            }),
+        required=True,
+        initial='',
+        validators=[
+            RegexValidator(
+                regex=r'^\d{8}(?:\d{2})?$',
+                message='Numero de téléphone incorrect')
+        ])
+

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RiVoiturage</title>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href=" {% static 'RiVoiturage/css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href=" {% static 'RiVoiturage/css/animate.css' %}">
+    
+    <link rel="stylesheet" href=" {% static 'RiVoiturage/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href=" {% static 'RiVoiturage/css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href=" {% static 'RiVoiturage/css/magnific-popup.css' %}">
+
+    <link rel="stylesheet" href=" {% static 'RiVoiturage/css/aos.css' %}">
+
+    <link rel="stylesheet" href=" {% static 'RiVoiturage/css/ionicons.min.css' %}">
+
+    <link rel="stylesheet" href=" {% static 'RiVoiturage/css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href=" {% static 'RiVoiturage/css/jquery.timepicker.css' %}">
+
+    
+    <link rel="stylesheet" href=" {% static 'RiVoiturage/css/flaticon.css' %}">
+    <link rel="stylesheet" href=" {% static 'RiVoiturage/css/icomoon.css' %}">
+    <link rel="stylesheet" href=" {% static 'RiVoiturage/css/style.css' %}">
+  </head>
+  <body>
+    
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand"  href="{% url 'home' %}">RiVoiturage.</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+                {% if not request.user.is_anonymous %}
+                    <li class="nav-item"><a class="nav-link">Bienvenu {{ request.user.first_name }}</a></li>
+                <li class="nav-item cta"><a href="{% url 'deconnexion' %}" class="nav-link" ><span> Déconnexion </span></a></li>
+                {% else %}
+                <li class="nav-item"><a href="{% url 'connexion' %}" class="nav-link">Connexion</a></li>
+                <li class="nav-item"><a href="{% url 'compte_client' %}" class="nav-link">Inscription</a></li>
+                <li class="nav-item cta"><a href="{% url 'compte_chauffeur' %}" class="nav-link" ><span>Proposez une traget</span></a></li>
+        
+                {% endif %}
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+    
+    
+    <section class="ftco-section" >
+      {% block content %}
+
+
+    
+      {% endblock content%}
+    </section>
+   
+   <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-3">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">RiVoiturage.</h2>
+            </div>
+            <ul class="ftco-footer-social list-unstyled float-md-left float-lft ">
+              <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+              <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+              <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+            </ul>
+          </div>
+          <div class="col-md-2">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+      
+            </div>
+          </div>
+          <div class="col-md-4 pr-md-4">
+            <div class="ftco-footer-widget mb-4">
+             
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="ftco-footer-widget mb-4">
+            	<h2 class="ftco-heading-2">Contact Info</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">Nouakchot, Mauritanie</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">27766003</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">support@rivouturage.com</span></a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+
+            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;  All rights reserved  RiVoiturage
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalRequest" tabindex="-1" role="dialog" aria-labelledby="modalRequestLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalRequestLabel">Request a Quote</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="#">
+            <div class="form-group">
+              <!-- <label for="appointment_name" class="text-black">Full Name</label> -->
+              <input type="text" class="form-control" id="appointment_name" placeholder="Full Name">
+            </div>
+            <div class="form-group">
+              <!-- <label for="appointment_email" class="text-black">Email</label> -->
+              <input type="text" class="form-control" id="appointment_email" placeholder="Email">
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <!-- <label for="appointment_date" class="text-black">Date</label> -->
+                  <input type="text" class="form-control" id="appointment_date" placeholder="Date">
+                </div>    
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <!-- <label for="appointment_time" class="text-black">Time</label> -->
+                  <input type="text" class="form-control" id="appointment_time" placeholder="Time">
+                </div>
+              </div>
+            </div>
+            
+
+            <div class="form-group">
+              <!-- <label for="appointment_message" class="text-black">Message</label> -->
+              <textarea name="" id="appointment_message" class="form-control" cols="30" rows="10" placeholder="Message"></textarea>
+            </div>
+            <div class="form-group">
+              <input type="submit" value="Get a Quote" class="btn btn-primary">
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+  <script src="{% static 'RiVoiturage/js/jquery.min.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/jquery-migrate-3.0.1.min.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/popper.min.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/jquery.stellar.min.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/aos.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/jquery.animateNumber.min.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/bootstrap-datepicker.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/jquery.timepicker.min.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/scrollax.min.js' %}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="{% static 'RiVoiturage/js/google-map.js' %}"></script>
+  <script src="{% static 'RiVoiturage/js/main.js' %}"></script>
+    
+  </body>
+</html>

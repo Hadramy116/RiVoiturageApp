@@ -1,0 +1,11 @@
+    <form action="{% url 'createTraget' %}" method="post">
+                  {%csrf_token%}
+                  {% for field in form.visible_fields %}
+
+                  <label class="">{{field.label_tag}}</br></label>
+                  {{ field }}</br>
+                  {% endfor %}
+
+                <button type="submit">Créer un compte</button>
+
+              </form>
