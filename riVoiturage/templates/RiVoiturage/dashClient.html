@@ -3,21 +3,44 @@
 
 
 <div class="container" >
+             {% if messages  %}
+                  {% for message in messages %}
+                  <!-- Teal Alert -->
+                  <div class="alert alert-dismissible fade show g-bg-red g-color-white rounded-0" role="alert">
+                    <button type="button" class="close u-alert-close--light" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    <div class="media">
+                      <span class="d-flex g-mr-10 g-mt-5">
+                        <i class=" g-font-size-25"></i>
+                      </span>
+                      <span class="media-body align-self-center">
+                        {{ message }}
+                      </span>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  <!-- End Teal Alert -->
+              
+            {% endif %}
+
     <h2> liste des tragets </h1>
-
-    {% for target in targets %}
-        <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">Point d'arrivé :   {{target.point_arrive }} </h5>
-            <p class="card-text">Point de départ :   {{target.point_depart}} </p>
-            <p class="card-text">Numero du chauffeur :    {{target.chauffeur}}  </p>
-
-            <a href="/RiVoiturage/reserver/{{ target.pk}}" class="btn btn-primary">Reserver</a>
-            <a href="#" class="btn btn-primary">voir plus</a>
-        </div>
-        </div>
-    {% endfor %}
-
+       <div class="list-group">
+            {% for target in targets %}
+                <div  class="list-group-item list-group-item-action flex-column align-items-start active">
+                    <div class="d-flex w-90 justify-content-between">
+                    <h5 class="mb-1">Point d'arrivé :   {{target.point_arrive }}  
+                        <a href="/RiVoiturage/reserver/{{ target.pk}}" class="btn btn-primary">Reserver</a>
+                    </h5>
+                    <small> {{target.date}}</small>
+                    </div>
+                    <p class="mb-1">Point de départ :   {{target.point_depart}}.</p>
+                    <p class="mb-1">Numero du chauffeur :    {{target.chauffeur}} </p>
+                    <p class="mb-1">Le Prix :    {{target.prix}} </p>
+                   
+                </div>
+            {% endfor %}
+    </div>
 </div>
 
 

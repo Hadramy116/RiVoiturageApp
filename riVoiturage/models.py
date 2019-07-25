@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime 
 from django.contrib.auth.models import User
 
 
@@ -30,21 +31,21 @@ class Chauffeur(models.Model):
         return self.user.username
 
 
-
-
 class Traget(models.Model):
     point_depart = models.CharField(max_length=10, blank=True, null=True)
     point_arrive = models.CharField(max_length=10, blank=True, null=True)
-    chauffeur = models.OneToOneField(
+    chauffeur = models.ForeignKey(
         Chauffeur,
-        on_delete=models.CASCADE,
-        primary_key=True,
+        on_delete=models.CASCADE
     )
-    voiture=models.ForeignKey(Voiture, on_delete=models.CASCADE,null=True)
-    #date=models.DateTimeField('date ')
+    date=models.DateTimeField(default=datetime.now, blank=True)
+    prix  = models.DecimalField( max_digits=19, decimal_places=10)
 
     def __str__(self):
         return self.point_depart
+
+    def get_clients(self):
+        return self.client_set.all()
 
 
 class Client(models.Model):

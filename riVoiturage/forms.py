@@ -130,12 +130,13 @@ class CompteChauffeur(forms.Form):
                 'placeholder': 'Mot de passe'
             }),
         required=True,
-        validators=[
-            RegexValidator(
-                regex=r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
-                message=
-                'Votre mot de passe doit comprendre 8 caractères ou plus.')
-        ])
+        # validators=[
+        #     RegexValidator(
+        #         regex=r'^',
+        #         message=
+        #         'Votre mot de passe doit comprendre 8 caractères ou plus.')
+        # ]
+    )
     password2 = forms.CharField(
         label="Confirmation Mot de passe",
         widget=forms.PasswordInput(
@@ -213,21 +214,31 @@ class CreerTrajet(forms.Form):
         }),
         required=True,
     )
-    chauffeur = forms.CharField(
-        label="Teléphone",
-        widget=forms.TextInput(
-            attrs={
-                'class':
-                    '',
-                'placeholder': ''
-            }),
+    prix = forms.DecimalField(
+        label="Prix",
+        widget=forms.TextInput(attrs={
+            'class':
+                'form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15',
+            'placeholder':
+                ''
+        }),
         required=True,
-        initial='',
-        validators=[
-            RegexValidator(
-                regex=r'^\d{8}(?:\d{2})?$',
-                message='Numero de téléphone incorrect')
-        ])
+    )
+    # chauffeur = forms.CharField(
+    #     label="Teléphone",
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             'class':
+    #                 'form-control',
+    #             'placeholder': ''
+    #         }),
+    #     required=True,
+    #     initial='',
+    #     validators=[
+    #         RegexValidator(
+    #             regex=r'^\d{8}(?:\d{2})?$',
+    #             message='Numero de téléphone incorrect')
+    #     ])
 
 
 class AjouterVoiture(forms.Form):
@@ -258,7 +269,18 @@ class AjouterVoiture(forms.Form):
         ('GAZOILE', 'GAZOILE')
     )
 
-    carburant = forms.ChoiceField(label="carburant",choices=CARBURANT)
+    carburant = forms.ChoiceField(
+        label="carburant",
+        choices=CARBURANT,
+        widget=forms.Select(attrs={
+            'class':
+                'form-control',
+            'placeholder':
+                ''
+        }),
+        
+     
+    )
     #     widget=forms.TextInput(attrs={
     #         'class':
     #             'form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15',

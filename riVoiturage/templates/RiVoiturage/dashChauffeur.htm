@@ -1,0 +1,85 @@
+{% extends "RiVoiturage/layout.html"  %}
+{% block content %}
+    <div class="container" >
+             {% if messages  %}
+                  {% for message in messages %}
+                  <!-- Teal Alert -->
+                  <div class="alert alert-dismissible fade show g-bg-red g-color-white rounded-0" role="alert">
+                    <button type="button" class="close u-alert-close--light" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    <div class="media">
+                      <span class="d-flex g-mr-10 g-mt-5">
+                        <i class=" g-font-size-25"></i>
+                      </span>
+                      <span class="media-body align-self-center">
+                        {{ message }}
+                      </span>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  <!-- End Teal Alert -->
+              
+            {% endif %}
+        <div class="row">
+            <div class="col-4">
+                <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Crée traget</a>
+                <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Ajouter Voiture</a>
+                <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Mes voyages</a>
+               {% comment %}  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a> {% endcomment %}
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                
+                    <form action="{% url 'dashChauffeur' %}" method="post">
+                        {%csrf_token%}
+                        {% for field in form.visible_fields %}
+                        <label class="">{{field.label_tag}}</br></label>
+                        {{ field }}</br>
+                        {% endfor %}
+                        <button  name="create_tg" class="btn btn-primary" type="submit">Créer traget  </button>
+                    </form>
+                
+                </div>
+                <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                      <form action="{% url 'dashChauffeur' %}" method="post">
+                                    {%csrf_token%}
+                                    {% for field in fromVoiture.visible_fields %}
+
+                                    <label class="">{{field.label_tag}}</br></label>
+                                    {{ field }}</br>
+                                    {% endfor %}
+
+                                    <button name="add_car" class="btn btn-primary" type="submit">ajouterVoiture</button>
+
+                    </form>
+                
+                </div>
+                <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+                    {% for target in myTgs %}
+                        <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                           {{target.point_depart}}   --->   {{target.point_arrive }}
+                        </div>
+                        <ul class="list-group list-group-flush">
+                         
+                            {% for client in traget.client_set.all %}
+                                    --
+                                <li class="list-group-item">{{client}} </li>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% comment %} <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+                {% endcomment %}
+                </div> 
+            </div>
+        </div>
+
+
+    </div>
+{% endblock content %}
