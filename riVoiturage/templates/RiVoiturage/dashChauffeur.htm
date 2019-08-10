@@ -65,11 +65,15 @@
                         <div class="card-header">
                            {{target.point_depart}}   --->   {{target.point_arrive }}
                            <br />
-                           Les demandes de reservation  {{raget.client_set.all|length }}
-                           {% for client in traget.client_set.all %}
-            
-                               <li class="list-group-item">Numero client : {{client.user.username}}  </li>
-                           {% endfor %}
+                           {% if target.client_set.all %}
+                                 Les demandes de reservation  
+                                    {% for client in target.client_set.all %}
+                        
+                                        <li class="list-group-item">Numero client : {{client.user.username}}  </li>
+                                    {% endfor %}
+                           {% else %}
+                           {% endif %}
+                          
                         </div>
                      
                         
