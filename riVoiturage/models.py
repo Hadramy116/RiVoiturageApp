@@ -11,7 +11,7 @@ class Voiture(models.Model):
     )
 
     marque = models.CharField(max_length=10, blank=True, null=True)
-    matricule = models.IntegerField()
+    matricule = models.CharField(max_length=10, blank=True, null=True)
     carburant = models.CharField(
         max_length=10,
         choices=CARBURANT,
@@ -19,6 +19,7 @@ class Voiture(models.Model):
         null=True,
     )
     capacite = models.IntegerField()
+   
 
 
 class Chauffeur(models.Model):
@@ -39,7 +40,9 @@ class Traget(models.Model):
         on_delete=models.CASCADE
     )
     date=models.DateTimeField(default=datetime.now, blank=True)
-    prix  = models.DecimalField( max_digits=19, decimal_places=10)
+    prix  = models.DecimalField( max_digits=19, decimal_places=0)
+    nbplace = models.IntegerField()
+    iscompleted = models.BooleanField(default=False)
 
     def __str__(self):
         return self.point_depart

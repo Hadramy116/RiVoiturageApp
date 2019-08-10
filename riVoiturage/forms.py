@@ -224,6 +224,16 @@ class CreerTrajet(forms.Form):
         }),
         required=True,
     )
+    nbplace = forms.IntegerField(
+        label="Nombre de place",
+        widget=forms.TextInput(attrs={
+            'class':
+                'form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded g-py-15 g-px-15',
+            'placeholder':
+                ''
+        }),
+        required=True,
+    )
     # chauffeur = forms.CharField(
     #     label="Teléphone",
     #     widget=forms.TextInput(

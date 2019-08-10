@@ -6,7 +6,7 @@
              {% if messages  %}
                   {% for message in messages %}
                   <!-- Teal Alert -->
-                  <div class="alert alert-dismissible fade show g-bg-red g-color-white rounded-0" role="alert">
+                  <div style="background:#F6D55C"  class="alert alert-dismissible" role="alert">
                     <button type="button" class="close u-alert-close--light" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
@@ -24,10 +24,38 @@
               
             {% endif %}
 
-    <h2> liste des tragets </h1>
-       <div class="list-group">
+
+
+       <div style="background:#ffff" class="list-group">
             {% for target in targets %}
-                <div  class="list-group-item list-group-item-action flex-column align-items-start active">
+                 <div  class="list-group-item list-group-item-action flex-column align-items-start active">
+                  <div style="color:black" class="card">
+                    <div class="card-header">
+                      Direction :  {{target.point_arrive }}  
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title"></h5>
+                      <p class="card-text">Point de départ :   {{target.point_depart}}</p>
+                      <p class="card-text">Numero du chauffeur :    {{target.chauffeur}}</p>
+                      <p class="card-text">Le Prix :     {{target.prix}} MRU</p>
+                      <p class="card-text">Le nombre de place :     {{target.nbplace}} </p>
+                      
+                      {% if target.iscompleted %}
+                              <p  class="btn btn-success">Complet</p>
+                      {% else %}
+
+                        <a href="/RiVoiturage/reserver/{{target.pk}}"  class="btn btn-primary">Reserver votre place</a>
+
+                      {% endif %}
+
+                      
+                    </div>
+                    <div class="card-footer text-muted">
+                        <p class="card-text">Date de creation :  {{target.date}}</p>
+                     </div>
+                  </div>
+                </div>
+                {% comment %} <div  class="list-group-item list-group-item-action flex-column align-items-start active">
                     <div class="d-flex w-90 justify-content-between">
                     <h5 class="mb-1">Point d'arrivé :   {{target.point_arrive }}  
                         <a href="/RiVoiturage/reserver/{{ target.pk}}" class="btn btn-primary">Reserver</a>
@@ -38,7 +66,7 @@
                     <p class="mb-1">Numero du chauffeur :    {{target.chauffeur}} </p>
                     <p class="mb-1">Le Prix :    {{target.prix}} </p>
                    
-                </div>
+                </div> {% endcomment %}
             {% endfor %}
     </div>
 </div>

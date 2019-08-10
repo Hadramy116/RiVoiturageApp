@@ -33,16 +33,17 @@ def dashChauffeur(request):
             if "create_tg" in request.POST:
                 if form.is_valid():
                     try:
-                        chauffeur= Chauffeur.objects.get(user=request.user)
                         if chauffeur.voiture == None:
                             messages.add_message(
-                                request, messages.ERROR,"Vous n'avez pas une voitures Merci d'ajouter votre voiture")
+                                request, messages.ERROR,"Vous n'avez pas une voiture Merci d'ajouter votre voiture")
                             return render(request, 'RiVoiturage/dashChauffeur.htm', locals()) 
                         tg = Traget(
                             point_depart=form.cleaned_data['point_depart'],
                             point_arrive=form.cleaned_data['point_darrive'],
-                            chauffeur=chauffeur
-                            )
+                            chauffeur=chauffeur,
+                            prix = form.cleaned_data['prix'],
+                            nbplace=form.cleaned_data['nbplace']
+                        )
                         tg.save()
                         messages.add_message(
                                 request, messages.ERROR,"Traget Creer avec succe !")
@@ -53,17 +54,21 @@ def dashChauffeur(request):
 
             if  "add_car" in request.POST:
                 if fromVoiture.is_valid():
-                    vr = Voiture(
-                        marque=fromVoiture.cleaned_data['marque'],
-                        matricule=fromVoiture.cleaned_data['matricule'],
-                        carburant = fromVoiture.cleaned_data['carburant'],
-                        capacite = fromVoiture.cleaned_data['capacite']
-                    )  
-                    vr.save()
-                    chauffeur.voiture=vr
-                    chauffeur.save()
-                    messages.add_message(
-                                request, messages.SUCCESS,"Voiture ajouter avec success")
+                    try:
+                        vr = Voiture(
+                            marque=fromVoiture.cleaned_data['marque'],
+                            matricule=fromVoiture.cleaned_data['matricule'],
+                            carburant = fromVoiture.cleaned_data['carburant'],
+                            capacite = fromVoiture.cleaned_data['capacite']
+                        )  
+                        vr.save()
+                        chauffeur.voiture=vr
+                        chauffeur.save()
+                        messages.add_message(
+                                    request, messages.SUCCESS,"Voiture ajouter avec success")
+                    except Exception:
+                        messages.add_message(
+                                    request, messages.SUCCESS,"Inpossible d'ajouter la voiture")
 
 
     return render(request, 'RiVoiturage/dashChauffeur.htm', locals()) 
@@ -174,7 +179,8 @@ def CreateTarget(request):
                    point_depart=form.cleaned_data['point_depart'],
                    point_arrive=form.cleaned_data['point_darrive'],
                    prix=form.cleaned_data['prix'],
-                   chauffeur=chauffeur
+                   chauffeur=chauffeur,
+                   nbplace = form.cleaned_data['nbplace']
                 )
             tg.save()
             return redirect(reverse('dashClient'))
@@ -223,25 +229,26 @@ def Ajouter(request):
 @login_required(login_url='connexion')
 def Reserver(request, id):
     tg = Traget.objects.get(pk=id)
-
+    client = Client.objects.get(user=request.user)
+    print(client.id)
     try:
-        client = Client.objects.get(user=request.user)
-        try :
-            if tg.client_set.get(user=request.user):
-                messages.add_message(request, messages.INFO, "Reservation effectuer deja !? ")
-                return redirect(reverse('dashClient'))
-        except Exception:
-            if len(tg.client_set.all()) <= 5  :
+        
+        tg.client_set.get(pk=client.pk)
+        messages.add_message(request, messages.INFO, "Reservation effectuer déja !? ")
+        return redirect(reverse('dashClient'))
+    except Client.DoesNotExist as identifier:
+            if len(tg.client_set.all()) <= tg.nbplace  :
+              
                 tg.client_set.add(client)
+                tg.nbplace = tg.nbplace - 1
+                if tg.nbplace == 0:
+                    tg.iscompleted = True
                 tg.save()
-                msg = "Reservsation passer avec success "
+                msg = "Reservsation passer avec success  "
                 messages.add_message(request, messages.INFO, msg)
                 return redirect(reverse('dashClient'))
             else:
-                messages.add_message(request, messages.INFO, "Chercher un autre traget")
+        
+                messages.add_message(request, messages.INFO, "Désolée le nombre de place reservé pour sont fini !")
                 return redirect(reverse('dashClient'))
-
-    except Client.DoesNotExist:
-        #raise Http404("Client does not exist !!!")
-        HttpResponse("Client does not exist !!!")
-    return render(request, 'RiVoditurage/reserver.html', tg)
+    return redirect(reverse('dashClient'))
